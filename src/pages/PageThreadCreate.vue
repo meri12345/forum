@@ -4,6 +4,7 @@
           <h1>Create new thread in <i>{{forum.name}}</i></h1>
 
         <ThreadEditor
+        ref="editor"
         @save="save"
         @cancel="cancel"/>
         
@@ -49,6 +50,20 @@ export default {
         .then(()=>{
             this.fetched()
         })
+    },
+    beforeRouteLeave(to,from,next){
+        if(this.$refs.editor.form.text || this.$refs.editor.form.title){
+            const confirmed = window.confirm("Are you sure you want to leave?")
+        if(confirmed){
+            next()
+        }
+        else{
+            next(false)
+        }
+        }
+        else{
+            next()
+        }
     }
 }
 </script>

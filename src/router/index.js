@@ -10,6 +10,8 @@ import PageCategory from '@/pages/PageCategory'
 import PageProfile from '@/pages/PageProfile'
 import PageRegister from '@/pages/PageRegister'
 import PageSignIn from '@/pages/PageSignIn'
+import store from '../store/index'
+
 
 
 
@@ -40,7 +42,15 @@ export default new Router({
       name: 'ProfileEdit',
       props: {
         edit:true
-      }
+      },
+      beforeRouteEnter(to,from,next){
+        if(store.state.authId){
+            next()
+        }
+        else{
+            next("/")
+        }
+    }
     },
     {
       path: '/category/:id',
