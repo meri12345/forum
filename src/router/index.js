@@ -8,6 +8,9 @@ import PageNotFound from '@/pages/PageNotFound'
 import PageForum from '@/pages/PageForum'
 import PageCategory from '@/pages/PageCategory'
 import PageProfile from '@/pages/PageProfile'
+import PageRegister from '@/pages/PageRegister'
+import PageSignIn from '@/pages/PageSignIn'
+
 
 
 Vue.use(Router)
@@ -63,6 +66,21 @@ export default new Router({
       component: PageThreadCreate,
       props: true
     },
+    
+    
+    {
+      path: '/register',
+      name: 'Register',
+      component: PageRegister,
+      props: true
+    },
+    {
+      path: '/signIn',
+      name: 'signIn',
+      component: PageSignIn,
+      props: true
+    },
+    
     {
       path:'*',
       name:'NotFound',
