@@ -35,7 +35,6 @@
                   <div class="form-actions">
                       <button  type="submit" class="btn-blue btn-block">Register</button>
                   </div>
-
               </form>
           </div>
       </div>
