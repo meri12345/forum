@@ -11,6 +11,9 @@ export const mutations={
         Vue.set(state[resource],id,item);
 
     },
+    setUnsibscribeAuthObserver(state,unsibscribe){
+        state.unsibscribeAuthObserver=unsibscribe
+    },
     saveUser(state,{user,userId}){
         Vue.set(state.users,userId,user);
     },

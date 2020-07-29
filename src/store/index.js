@@ -13,7 +13,8 @@ export default new Vuex.Store({
         forums: {},
         threads: {},
         users: {},
-        posts: {}
+        posts: {},
+        unsibscribeAuthObserver:null
     },
     getters:{
         authUser(state){

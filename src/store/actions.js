@@ -69,6 +69,25 @@ export const actions={
         })
     },
 
+    initAuthentication({dispatch,commit,state}){
+        return new Promise((resolve,reject)=>{
+            if(state.unsibscribeAuthObserver){
+                state.unsibscribeAuthObserver()
+            }
+          const unsubscribe = firebase.auth().onAuthStateChanged(user=>{
+                if(user){
+                  dispatch('fetchAuthUser')
+                  .then(dbUser=>resolve(dbUser))
+                }
+                else{
+                    resolve(null)
+                }
+              })
+              commit('setUnsibscribeAuthObserver',unsubscribe)
+        })
+      
+    },
+
     updatePost({state,commit},{id,text}){
         return new Promise((resolve,reject)=>{
             const post= state.posts[id]

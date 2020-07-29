@@ -17,7 +17,7 @@ import store from '../store/index'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -34,7 +34,8 @@ export default new Router({
       path: '/me',
       component: PageProfile,
       name: 'Profile',
-      props: true
+      props: true,
+      meta:{requiresAuth:true}
     },
     {
       path: '/me/edit',
@@ -42,15 +43,7 @@ export default new Router({
       name: 'ProfileEdit',
       props: {
         edit:true
-      },
-      beforeRouteEnter(to,from,next){
-        if(store.state.authId){
-            next()
-        }
-        else{
-            next("/")
-        }
-    }
+      }
     },
     {
       path: '/category/:id',
@@ -90,7 +83,14 @@ export default new Router({
       component: PageSignIn,
       props: true
     },
-    
+    {
+      path: '/logout',
+      name: 'SignOut',
+      beforeEnter(to,from,next){
+        store.dispatch('signOut')
+        .then(()=>next({name:'Home'}))
+      }
+    },
     {
       path:'*',
       name:'NotFound',
@@ -99,3 +99,29 @@ export default new Router({
   ],
   mode:'history'
 })
+
+router.beforeEach((to,from,next)=>{
+  console.log("Navigating from "+from.name+" to "+to.name)
+
+  store.dispatch('initAuthentication')
+  .then((user)=>{
+    if(to.meta.requiresAuth){
+      if(user){
+        next()
+    }
+    else{
+        next("/")
+    }
+    }
+    else{
+      next()
+    }
+  })
+
+
+ 
+})
+
+
+
+export default router

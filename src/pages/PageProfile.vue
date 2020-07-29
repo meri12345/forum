@@ -37,7 +37,6 @@ import { mapGetters } from 'vuex'
 import {countObjectProperties} from '@/utilis/index.js'
 import UserProfileCard from '../components/UserProfileCard'
 import UserProfileCardEditor from '../components/UserProfileCardEditor'
-import store from '../store/index'
 
 
 export default {
@@ -74,14 +73,7 @@ export default {
     },
     created(){
         this.$emit('ready')
-    },
-    beforeRouteEnter(to,from,next){
-        if(store.state.authId){
-            next()
-        }
-        else{
-            next("/")
-        }
     }
+   
 }
 </script>
