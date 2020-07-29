@@ -70,6 +70,9 @@ export default {
             type:Boolean,
             default: false
         }
+    },
+    created(){
+        this.$emit('ready')
     }
 }
 </script>
