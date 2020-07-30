@@ -46,7 +46,7 @@ export const mutations={
     },
     appendThreadToUser(state,{userId,threadId}){
         if(!state.users[userId].threads){
-            Vue.set(state.users[userId].threads,'threads',{})
+            Vue.set(state.users[userId],'threads',{})
         }
         Vue.set(state.users[userId].threads,threadId, threadId)
     },

@@ -23,9 +23,7 @@
                 </div>
             </form>
 
-            <div class="push-top text-center">
-                <button  class="btn-red btn-xsmall"><i class="fa fa-google fa-btn"></i>Sign in with Google</button>
-            </div>
+            
         </div>
     </div>
 </template>

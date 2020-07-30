@@ -76,8 +76,10 @@ export const actions={
             }
           const unsubscribe = firebase.auth().onAuthStateChanged(user=>{
                 if(user){
+                   
                   dispatch('fetchAuthUser')
-                  .then(dbUser=>resolve(dbUser))
+                  resolve(user)
+                  
                 }
                 else{
                     resolve(null)

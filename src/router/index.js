@@ -61,13 +61,15 @@ const router = new Router({
       path: '/thread/:id/edit',
       name: 'ThreadEdit',
       component: PageThreadEdit,
-      props: true
+      props: true,
+      meta:{requiresAuth:true}
     },
     {
       path: '/thread/create/:forumId',
       name: 'ThreadCreate',
       component: PageThreadCreate,
-      props: true
+      props: true,
+      meta:{requiresAuth:true}
     },
     
     
@@ -75,17 +77,20 @@ const router = new Router({
       path: '/register',
       name: 'Register',
       component: PageRegister,
-      props: true
+      props: true,
+      meta:{requiresGuest:true}
     },
     {
       path: '/signIn',
       name: 'signIn',
       component: PageSignIn,
-      props: true
+      props: true,
+      meta:{requiresGuest:true}
     },
     {
       path: '/logout',
       name: 'SignOut',
+      meta:{requiresAuth:true},
       beforeEnter(to,from,next){
         store.dispatch('signOut')
         .then(()=>next({name:'Home'}))
@@ -107,6 +112,14 @@ router.beforeEach((to,from,next)=>{
   .then((user)=>{
     if(to.meta.requiresAuth){
       if(user){
+        next()
+    }
+    else{
+        next({name:'signIn'})
+    }
+    }
+   else if(to.meta.requiresGuest){
+      if(!user){
         next()
     }
     else{
