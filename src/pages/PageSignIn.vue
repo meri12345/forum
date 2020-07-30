@@ -44,9 +44,12 @@ export default {
                 email:this.form.email,
                 password:this.form.password
             })
-            .then(()=>this.$router.push("/"))
+            .then(()=>{
+            const redirectTo=this.$route.query.redirectTo || {name:'Home'}
+            this.$router.push(redirectTo)})
             .catch(err => alert(err.message))
-        }
+        },
+
     },
     created(){
         this.$emit('ready')

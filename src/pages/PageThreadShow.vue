@@ -8,7 +8,10 @@
           </p> 
         <router-link tag="button" class="btn-green btn-small" :to="{name:'ThreadEdit',id:this.id}">Edit</router-link> 
         <PostList :posts="posts"/>      
-        <PostEditor :threadId="id"/>
+        <PostEditor v-if="authUser" :threadId="id"/>
+        <div v-else>
+            <router-link :to="{name:'signIn',query:{redirectTo:$route.path}}">Sign in</router-link> or <router-link :to="{name:'Register'}">Register</router-link> to post reply.
+        </div>
       </div>
 </template>
 
@@ -19,6 +22,7 @@ import AppDate from '../components/AppDate'
 import firebase from 'firebase'
 import {countObjectProperties} from '../utilis/index'
 import asyncDataStatus from '../mixins/asyncDataStatus'
+import {mapGetters} from 'vuex'
 
 export default {
     props:{
@@ -34,6 +38,7 @@ export default {
         AppDate
     },
     computed:{
+        ...mapGetters(['authUser']),
         thread(){
             return this.$store.state.threads[this.id]
             

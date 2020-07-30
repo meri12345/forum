@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-grid">
+    <div v-if="asyncDataReady_ready" class="flex-grid">
          
          <UserProfileCard
          v-if="!edit"
@@ -37,6 +37,7 @@ import { mapGetters } from 'vuex'
 import {countObjectProperties} from '@/utilis/index.js'
 import UserProfileCard from '../components/UserProfileCard'
 import UserProfileCardEditor from '../components/UserProfileCardEditor'
+import asyncDataStatus from '../mixins/asyncDataStatus'
 
 
 export default {
@@ -50,16 +51,13 @@ export default {
         userThreadsCount(){
            return countObjectProperties(this.user.threads)
         },
+          
+
         userPosts(){
-            if(this.user.posts){
-                return Object.values(this.$store.state.posts)
-                .filter(post=>{
-                    return post.userId === this.user['.key']
-                })
-            }
-            else return []
+            return this.$store.getters.userPosts
         }
     },
+      mixins:[asyncDataStatus],
     components:{
         PostList,
         UserProfileCard,
@@ -72,7 +70,16 @@ export default {
         }
     },
     created(){
-        this.$emit('ready')
+        this.$store.dispatch('fetchAuthUser')
+        .then(()=>{
+        this.$store.dispatch('fetchPosts',{ids:Object.keys(this.user.posts)})
+        .then(()=>{
+            console.log(this.userPosts)
+            this.fetched()
+        })
+        })
+         
+        
     }
    
 }

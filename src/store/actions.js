@@ -51,6 +51,7 @@ export const actions={
     },
 
     fetchAuthUser({dispatch,commit}){
+        
         const userId = firebase.auth().currentUser.uid
         return dispatch('fetchUser',{id:userId})
         .then(()=>{

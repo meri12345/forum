@@ -115,7 +115,7 @@ router.beforeEach((to,from,next)=>{
         next()
     }
     else{
-        next({name:'signIn'})
+        next({name:'signIn',query:{redirectTo:to.path}})
     }
     }
    else if(to.meta.requiresGuest){

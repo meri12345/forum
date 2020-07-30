@@ -34,7 +34,7 @@ export const mutations={
     },
     appendPostToUser(state, {postId, userId}){
         if(!state.users[userId].posts){
-            Vue.set(state.users[userId].posts,'posts',{})
+            Vue.set(state.users[userId],'posts',{})
         }
         Vue.set(state.users[userId].posts, postId, postId) 
     },
