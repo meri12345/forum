@@ -6,7 +6,7 @@
         </router-link>
 
 
-        <div class="btn-hamburger">
+        <div @click="mobileNavOpen=!mobileNavOpen" class="btn-hamburger">
             <!-- use .btn-humburger-active to open the menu -->
             <div class="top bar"></div>
             <div class="middle bar"></div>
@@ -14,7 +14,7 @@
         </div>
 
     <!-- use .navbar-open to open nav -->
-    <nav  class="navbar">
+    <nav  class="navbar" :class="{'navbar-open':mobileNavOpen}">
         <ul v-if="user">
 
             <li class="navbar-user">
@@ -41,6 +41,25 @@
         <ul v-else>
             <li class="navbar-user"><router-link tag="a" :to="{name:'signIn'}">Sign In</router-link></li>
         </ul>
+
+        <ul>
+            <template v-if="user">
+                 <li class="navbar-item mobile-only">
+                <router-link tag="a" :to="{name:'Profile'}">My Profile</router-link>
+                </li>
+                <li class="navbar-item mobile-only">
+                    <router-link tag="a" :to="{name:'SignOut'}">Logout</router-link>
+                </li>
+            </template>
+           <template v-else>
+                 <li class="navbar-item mobile-only">
+                <router-link tag="a" :to="{name:'signIn'}">Sign In</router-link>
+                </li>
+                <li class="navbar-item mobile-only">
+                <router-link tag="a" :to="{name:'Register'}">Register</router-link>
+                </li>
+            </template>
+        </ul>
     </nav>
   </header>
 </template>
@@ -55,7 +74,8 @@ export default {
     },
     data(){
         return{
-            userDropdownOpen:false
+            userDropdownOpen:false,
+            mobileNavOpen:false
         }
     }
 }
